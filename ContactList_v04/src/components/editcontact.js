@@ -9,13 +9,14 @@ const EditContact = ({ contacts, updateContact }) => {
   const currentContact = contacts.find(
     (contact) => contact.id === parseInt(id)
   );
-console.log(currentContact);
+  console.log(currentContact);
   useEffect(() => {
     setName(currentContact.name);
     setEmail(currentContact.email);
     setPhone(currentContact.phone);
     setPhoneType(currentContact.phoneType);
-    setWhatsApp(currentContact.whatsApp)
+    setWhatsApp(currentContact.whatsApp);
+    setSelectedImage(currentContact.selectedImage)
   }, [currentContact]);
 
   const [name, setName] = useState("");
@@ -23,6 +24,7 @@ console.log(currentContact);
   const [phone, setPhone] = useState("");
   const [phoneType, setPhoneType] = useState("");
   const [whatsApp, setWhatsApp] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +55,8 @@ console.log(currentContact);
       name,
       phone,
       phoneType,
-      whatsApp
+      whatsApp,
+      selectedImage
     };
 
     updateContact(data);
@@ -98,13 +101,13 @@ console.log(currentContact);
                 />
               </div>
               <div className="form-group">
-                Type: 
-                  <select onChange={(e) => setPhoneType(e.target.value)} name="phoneType">
-                    
-                    <option value="personal" >Personal</option>
-                    <option value="office" >Office</option>
-                  </select>
-            </div>
+                Type:
+                <select onChange={(e) => setPhoneType(e.target.value)} name="phoneType">
+
+                  <option value="personal" >Personal</option>
+                  <option value="office" >Office</option>
+                </select>
+              </div>
               <div className="form-group">
                 <label>
                   Is WhatsApp:
@@ -113,7 +116,17 @@ console.log(currentContact);
                     type="checkbox"
                     checked={whatsApp}
                     onChange={(e) => setWhatsApp(!whatsApp)}
-                />
+                  />
+                </label>
+              </div>
+              <div className="form-group">
+                <label>
+                  Avatar:
+                  <input
+                    name="selectedImage"
+                    type="file"
+                    onChange={(event) => setSelectedImage(URL.createObjectURL(event.target.files[0]))}
+                  />
                 </label>
               </div>
               <div className="form-group d-flex align-items-center justify-content-between my-2">
@@ -139,7 +152,7 @@ console.log(currentContact);
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contact,
 });
 const mapDispatchToProps = (dispatch) => ({
   updateContact: (data) => {

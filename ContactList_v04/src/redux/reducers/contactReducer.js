@@ -20,7 +20,7 @@ export const contactReducer = (state = initialState, action) => {
       state = contactUpdate;
       return state;
     case "RESET_CONTACT":
-      state = [{ name: null, email: null, phone: null, whatsApp: null }];
+      state = [{ name: null, email: null, phone: null, whatsApp: null, selectedImage: null }];
       return state;
     default:
       return state;

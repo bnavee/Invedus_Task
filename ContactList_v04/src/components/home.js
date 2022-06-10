@@ -15,6 +15,7 @@ const Home = ({ contacts, deleteContact }) => {
     setDeleteId(null);
     setShowConfirmation(false);
   };
+
   return (
     <div className="container">
       <div className="row d-flex flex-column">
@@ -31,6 +32,7 @@ const Home = ({ contacts, deleteContact }) => {
                 <th scope="col">Phone</th>
                 <th scope="col">Phone Type</th>
                 <th scope="col">WhatsApp</th>
+                <th scope="col">Avatar</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -44,6 +46,12 @@ const Home = ({ contacts, deleteContact }) => {
                     <td>{contact.phone}</td>
                     <td>{contact.phoneType}</td>
                     <td>{contact.whatsApp ? "✓" : "X"}</td>
+                    <td>
+                      {contact.selectedImage && (
+                        <div>
+                          <img alt="not found" width={"50px"} src={contact.selectedImage} />
+                        </div>
+                      )}</td>
                     <td>
                       <Link
                         to={`/edit/${contact.id}`}
@@ -81,7 +89,7 @@ const Home = ({ contacts, deleteContact }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contact,
 });
 
 const mapDispatchToProps = (dispatch) => ({

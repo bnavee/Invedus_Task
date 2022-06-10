@@ -4,18 +4,24 @@ import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 
 const AddPost = ({ contacts, addContact }) => {
+  console.log(contacts);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneType, setPhoneType] = useState("");
   const [whatsApp, setWhatsApp] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
 
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const checkContactEmailExists = contacts.filter((contact) =>
+    console.log(contacts);
+    console.log(typeof (contacts));
+    const checkContactEmailExists = contacts.filter((contact) => {
+      console.log(contact.email);
       contact.email === email ? contact : null
+    }
     );
     const checkContactPhoneExists = contacts.filter((contact) =>
       contact.phone === phone ? contact : null
@@ -38,6 +44,7 @@ const AddPost = ({ contacts, addContact }) => {
       phone,
       phoneType,
       whatsApp,
+      selectedImage,
     };
 
     addContact(data);
@@ -101,6 +108,16 @@ const AddPost = ({ contacts, addContact }) => {
               </label>
             </div>
             <div className="form-group">
+              <label>
+                Avatar:
+                <input
+                  name="selectedImage"
+                  type="file"
+                  onChange={(event) => setSelectedImage(URL.createObjectURL(event.target.files[0]))}
+                />
+              </label>
+            </div>
+            <div className="form-group">
               <input
                 className="btn btn-block btn-dark"
                 type="submit"
@@ -115,7 +132,7 @@ const AddPost = ({ contacts, addContact }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contact,
 });
 const mapDispatchToProps = (dispatch) => ({
   addContact: (data) => {
